@@ -8,204 +8,205 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Calculadora" >
 
-    <EditText
-        android:id="@+id/textoResultado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="31dp"
-        android:layout_marginTop="33dp"
-        android:ems="10" />
-
     <GridLayout
         android:id="@+id/gridBotones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textoResultado"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="10dp"
         android:columnCount="4"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/btnBorrar"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="0"
-            android:text="C" />
+            android:text="C" 
+            android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnDividir"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_row="0"
-            android:text="%" />
+            android:text="%" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnMultiplicar"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="center"
             android:layout_row="0"
-            android:text="X" />
+            android:text="X" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnBorrarCaracter"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="3"
             android:layout_gravity="center"
             android:layout_row="0"
-            android:text="@string/borrado" />
+            android:text="@string/borrado" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn7"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="1"
-            android:text="7" />
+            android:text="7" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn8"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_row="1"
-            android:text="8" />
+            android:text="8" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn9"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="center"
             android:layout_row="1"
-            android:text="9" />
+            android:text="9" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnMenos"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="3"
             android:layout_gravity="center"
             android:layout_row="1"
-            android:text="-" />
+            android:text="-" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn4"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="2"
-            android:text="4" />
+            android:text="4" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn5"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_row="2"
-            android:text="5" />
+            android:text="5" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn6"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="center"
             android:layout_row="2"
-            android:text="6" />
+            android:text="6" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnMas"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="3"
             android:layout_gravity="center"
             android:layout_row="2"
-            android:text="+" />
+            android:text="+" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn1"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="3"
-            android:text="1" />
+            android:text="1" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn2"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_row="3"
-            android:text="2" />
+            android:text="2" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn3"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="center"
             android:layout_row="3"
-            android:text="3" />
+            android:text="3" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnParentesis"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="3"
             android:layout_gravity="center"
             android:layout_row="3"
-            android:text="()" />
+            android:text="()" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btn0"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center"
             android:layout_row="4"
-            android:text="0" />
+            android:text="0" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnPunto"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_row="4"
-            android:text="." />
+            android:text="." android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnSigno"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="2"
             android:layout_gravity="center"
             android:layout_row="4"
-            android:text="+/-" />
+            android:text="+/-" android:background="@drawable/green_button" />
 
         <Button
             android:id="@+id/btnIgual"
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonText"
             android:layout_width="wrap_content"
             android:layout_column="3"
             android:layout_gravity="center"
             android:layout_row="4"
-            android:text="=" />
+            android:text="=" android:background="@drawable/green_button" />
     </GridLayout>
+
+    <EditText
+        android:id="@+id/textoResultado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:ems="10" />
 
 </RelativeLayout>
