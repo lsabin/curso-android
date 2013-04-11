@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -13,21 +13,30 @@
         android:gravity="left" >
 
         <ImageView
-            android:id="@+id/iconoContactos"
+            android:id="@+id/imageIconoContacto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/textoContactos"
+            android:id="@+id/textoNombreContacto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/iconoContactos"
-            android:text="@string/contactos"
+            android:layout_toRightOf="@+id/imageIconoContacto"
+            android:text="Nombre contacto"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />
+        
+        <ImageButton
+            android:id="@+id/imageAttach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/textoNombreContacto"
+            android:background="@null"
+            android:src="@drawable/content_new_attachment" />        
 
     </RelativeLayout>
 
@@ -36,9 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout2"
-        android:background="#CCEDC9" >
+        android:layout_below="@+id/relativeLayout1" 
+        android:background="#CCEDC9">
 
-    </ListView>
+    </ListView>    
+    
+    
 
 </RelativeLayout>
