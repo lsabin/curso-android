@@ -26,6 +26,7 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 			List<Contacto> items) {
 		super(context, textViewResourceId, items);
 		this.items = items;
+		
 		this.context = context;
 		
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -81,14 +82,21 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 		Contacto contacto = items.get(position);
 		List<Mensaje> mensajes = contacto.getMensajes();
 		
-		Mensaje ultimoMensaje = mensajes.get(mensajes.size()-1);
-		
+		String textoUltimoMensaje = null;
+		if (!mensajes.isEmpty()) {
+			
+			
+			Mensaje ultimoMensaje = mensajes.get(mensajes.size()-1);
+			textoUltimoMensaje = ultimoMensaje.getTextoMensaje();
+		} else {
+			textoUltimoMensaje = "";
+		}
+			
 		holder.contactName.setText(contacto.getNombre());
-		holder.lastLine.setText(ultimoMensaje.getTextoMensaje());
+		holder.lastLine.setText(textoUltimoMensaje);
 		
 		Date ultimaConexion = contacto.getUltimaConexion();
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		sdf.format(ultimaConexion);
 		holder.lastDate.setText(sdf.format(ultimaConexion));
 		
 		holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));

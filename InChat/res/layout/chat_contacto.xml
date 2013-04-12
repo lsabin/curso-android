@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#0099cc"
+        style="@style/cabeceras"
         android:gravity="left" >
 
         <ImageView
@@ -26,7 +26,7 @@
             android:layout_toRightOf="@+id/imageIconoContacto"
             android:text="Nombre contacto"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            style="@style/cabeceras" />
         
         <ImageButton
             android:id="@+id/imageAttach"
@@ -42,13 +42,49 @@
 
     <ListView
         android:id="@android:id/list"
+        style="@style/listas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout1" 
-        android:background="#CCEDC9">
+        android:layout_below="@+id/relativeLayout1"
+        android:divider="@null" 
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true">
 
     </ListView>    
+    
+     <RelativeLayout
+         android:id="@+id/relativeLayout2"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:background="#cccccc"
+         android:gravity="bottom" >
+        
+        <ImageButton
+            android:id="@+id/imageSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/textoNombreContacto"
+            android:background="@null"
+            android:src="@drawable/content_new_attachment" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
     
     
 

@@ -1,6 +1,12 @@
 package org.eu.inchat.adapters;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import org.eu.inchat.R;
+import org.eu.inchat.model.Contacto;
+import org.eu.inchat.model.Mensaje;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,16 +15,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.eu.inchat.R;
 
-public class ContactosAdapter extends ArrayAdapter<String> {
+public class ContactosAdapter extends ArrayAdapter<Contacto> {
 	
-	private List<String> items;
+	private List<Contacto> items;
 	private Context context;
 	private LayoutInflater inflater;
 
 	public ContactosAdapter(Context context, int textViewResourceId,
-			List<String> items) {
+			List<Contacto> items) {
 		super(context, textViewResourceId, items);
 		this.items = items;
 		this.context = context;
@@ -32,7 +37,7 @@ public class ContactosAdapter extends ArrayAdapter<String> {
 	}
 
 	@Override
-	public String getItem(int position) {
+	public Contacto getItem(int position) {
 		return items.get(position);
 	}
 
@@ -70,10 +75,14 @@ public class ContactosAdapter extends ArrayAdapter<String> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
+		Contacto contacto = items.get(position);
 		
-		holder.contactName.setText(items.get(position));
-		holder.mensajeEstado.setText("Disponible");
+		List<Mensaje> mensajes = contacto.getMensajes();
+		
+		holder.contactName.setText(contacto.getNombre());
+		holder.mensajeEstado.setText(contacto.getMensajeEstado());
 		holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+		
 		
 		return convertView;
 		

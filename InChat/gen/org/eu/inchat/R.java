@@ -27,22 +27,30 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f080011;
-        public static final int contact_textContactName=0x7f08000d;
-        public static final int contact_textMensajeEstado=0x7f08000e;
-        public static final int iconoContactos=0x7f08000f;
+        public static final int action_settings=0x7f080019;
+        public static final int chat_fechaLocal=0x7f080010;
+        public static final int chat_fechaRemoto=0x7f080013;
+        public static final int chat_textMensajeLocal=0x7f080011;
+        public static final int chat_textMensajeRemoto=0x7f080014;
+        public static final int contact_textContactName=0x7f080015;
+        public static final int contact_textMensajeEstado=0x7f080016;
+        public static final int derecha=0x7f080012;
+        public static final int editText1=0x7f08000e;
+        public static final int iconoContactos=0x7f080017;
         public static final int imageAddChat=0x7f080004;
         public static final int imageAttach=0x7f08000c;
         public static final int imageIconContact=0x7f080005;
         public static final int imageIcono=0x7f080001;
         public static final int imageIconoContacto=0x7f08000a;
         public static final int imageSearch=0x7f080003;
+        public static final int imageSend=0x7f08000d;
+        public static final int izquierda=0x7f08000f;
         public static final int relativeLayout1=0x7f080009;
         public static final int relativeLayout2=0x7f080000;
         public static final int textContactName=0x7f080006;
         public static final int textLastChatDate=0x7f080008;
         public static final int textLastChatLine=0x7f080007;
-        public static final int textoContactos=0x7f080010;
+        public static final int textoContactos=0x7f080018;
         public static final int textoHistorial=0x7f080002;
         public static final int textoNombreContacto=0x7f08000b;
     }
@@ -50,8 +58,9 @@ public final class R {
         public static final int activity_in_chat=0x7f030000;
         public static final int activity_inchat_listitem=0x7f030001;
         public static final int chat_contacto=0x7f030002;
-        public static final int contact_item=0x7f030003;
-        public static final int contacts=0x7f030004;
+        public static final int chat_item=0x7f030003;
+        public static final int contact_item=0x7f030004;
+        public static final int contacts=0x7f030005;
     }
     public static final class menu {
         public static final int in_chat=0x7f070000;
@@ -90,5 +99,8 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+        public static final int cabeceras=0x7f060003;
+        public static final int chats=0x7f060004;
+        public static final int listas=0x7f060002;
     }
 }

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#0099cc"
+		style="@style/cabeceras"        
         android:gravity="left" >
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_toRightOf="@+id/iconoContactos"
             android:text="@string/contactos"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            style="@style/cabeceras" />
 
     </RelativeLayout>
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout2"
-        android:background="#CCEDC9" >
+        style="@style/listas" >
 
     </ListView>
 

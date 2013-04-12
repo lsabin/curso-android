@@ -1,11 +1,12 @@
 package org.eu.inchat.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import android.net.Uri;
 
-public class Contacto {
+public class Contacto implements Serializable {
 	
 	private String nombre;
 	private String numeroTelefono;
@@ -13,6 +14,10 @@ public class Contacto {
 	private Uri iconoContacto;
 	private String mensajeEstado;
 	private List<Mensaje> mensajes;
+	
+	public Contacto() {
+		
+	}
 	
 	public Contacto(String nombre) {
 		super();

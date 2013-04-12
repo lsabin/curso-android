@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#0099cc"
+        style="@style/cabeceras"
         android:gravity="left" >
 
         <ImageView
@@ -27,8 +27,8 @@
             android:layout_marginLeft="14dp"
             android:layout_toRightOf="@+id/imageIcono"
             android:text="@string/historial"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
+            style="@style/cabeceras"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <ImageButton
             android:id="@+id/imageSearch"
@@ -55,10 +55,10 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout2"
-        android:background="#CCEDC9" >
+        style="@style/listas" >
 
     </ListView>
 
