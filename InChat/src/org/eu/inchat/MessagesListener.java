@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.eu.inchat.model.Contacto;
 
-
-
 public interface MessagesListener {
-	void onMessageSent();
+	void onMessageSent(Integer result);
 }

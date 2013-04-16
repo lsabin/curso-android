@@ -3,15 +3,17 @@ package org.eu.inchat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eu.inchat.adapters.ChatAdapter;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
-import org.eu.inchat.server.MessageSender;
-import org.eu.inchat.tasks.LoadContactsAsyncTask;
+import org.eu.inchat.tasks.ReadMessagesAsyncTask;
 import org.eu.inchat.tasks.ServerAsyncTask;
 
 import android.app.ListActivity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,11 +22,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class ChatActivity extends ListActivity implements MessagesListener {
+public class ChatActivity extends ListActivity implements MessagesListener, ReadMessagesListener {
 	
 	private List<String> chats;
 	private Contacto contacto;
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
+	private Timer timer;
+	private String ownerPhone = "9003";
 	
 	
 	private OnClickListener listenerEnvioMensaje = new OnClickListener() {
@@ -83,24 +87,23 @@ public class ChatActivity extends ListActivity implements MessagesListener {
 	}
 	
 	
-	private void enviaMensaje(String mensaje) {
+	private void enviaMensaje(String textoMensaje) {
 		
 		
 		
-		ServerAsyncTask task = ServerAsyncTask.newInstance(this);
+		ServerAsyncTask task = ServerAsyncTask.newInstance(this, getApplicationContext());
 		
-		String[] params = new String[]{"9003",contacto.getNumeroTelefono(), mensaje};
-		task.execute(params);
+		task.setOwnerPhone(ownerPhone);
+		Mensaje mensaje = new Mensaje(textoMensaje, new Date(), true, contacto.getNumeroTelefono());
+		task.execute(mensaje);
 		
-		
-		Mensaje nuevoMensaje = new Mensaje(mensaje, new Date(), true, contacto.getNumeroTelefono());
 		ChatAdapter adapter = (ChatAdapter) getListAdapter();
 		
-		/* Se pueden modificar la lista de mensajes o añadir con el metodo add
+		/* Se puede modificar la lista de mensajes o añadir con el metodo add
 		 * del adapter
 		 */
 		//Opcion 1: mensajes.add(new Mensaje(mensaje, new Date(), true, contacto.getNumeroTelefono()));
-		adapter.add(nuevoMensaje); //Otra forma de hacerlo:
+		adapter.add(mensaje); //Otra forma de hacerlo:
 		
 		//Notifica que hay nuevo mensaje al adapter
 		adapter.notifyDataSetChanged();
@@ -108,20 +111,75 @@ public class ChatActivity extends ListActivity implements MessagesListener {
 	}
 
 	@Override
-	public void onMessageSent() {
+	public void onMessageSent(Integer resultado) {
 		
-		String mensaje = "ENVIADO!";
+		Log.d(getClass().getName(), "Mensaje ENVIADO!");
 		
-		Mensaje nuevoMensaje = new Mensaje(mensaje, new Date(), true, contacto.getNumeroTelefono());
-		ChatAdapter adapter = (ChatAdapter) getListAdapter();
-		adapter.add(nuevoMensaje);
-		
-		//Notifica que hay nuevo mensaje al adapter
-		adapter.notifyDataSetChanged();		
 		
 	}
 	
 	
+	@Override
+	protected void onResume() {
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+
+			@Override
+			public void run() {
+				// Leer los mensajes
+				Log.d(getClass().getName(), "leyendo los mensajes");
+				readMessages();
+			}
+		}, 0, 20000L);
+		super.onResume();
+	}
+	
+	
+	private void readMessages() {
+		ReadMessagesAsyncTask task = ReadMessagesAsyncTask.newInstance(this, getApplicationContext());
+		task.setOwnerPhone(ownerPhone);
+		
+		task.execute();
+	}
+
+	@Override
+	public void onMessagesReceived(List<Mensaje> mensajesRecibidos) {
+		
+		
+		Log.d(getClass().getName(),"Mensajes recibidos: " + mensajesRecibidos);
+		
+		List<Mensaje> mensajesChat = new ArrayList<Mensaje>();
+		
+		ChatAdapter adapter = (ChatAdapter) getListAdapter();
+		
+		
+		//Se filtran los mensajes enviados por el contacto seleccionado
+		if (mensajesRecibidos != null && !mensajesRecibidos.isEmpty()) {
+			for (Mensaje mensajeRecibido : mensajesRecibidos) {
+				
+				Log.d(getClass().getName(), "contacto: " + contacto.getNumeroTelefono());
+				
+				
+				String numeroTelefono = mensajeRecibido.getUserId();
+				Log.d(getClass().getName(), "remitente mensaje: " + numeroTelefono);
+				
+				if(contacto.getNumeroTelefono().equals(numeroTelefono)) {
+					mensajesChat.add(mensajeRecibido);
+				}
+			}
+		}
+		
+		
+		for(Mensaje mensajito : mensajesChat) {
+			Log.d(getClass().getName(),"Mensajes chat: " + mensajito.getTextoMensaje());	
+		}
+		
+
+		adapter.addAll(mensajesRecibidos);
+		getListView().invalidateViews();
+		adapter.notifyDataSetChanged();
+
+	}
 		
 
 }

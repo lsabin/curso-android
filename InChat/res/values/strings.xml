@@ -6,5 +6,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="historial">Historial</string>
     <string name="contactos">Contactos</string>
+    <string name="menu_general">Opciones generales</string>
+    <string name="opciones_usuario">Opciones usuario</string>
+    <string name="opciones_servidor">Opciones servidor</string>
+    
+    <string name="menu_general_user_id">Id usuario</string>
+    <string name="menu_general_server_ip">IP servidor</string>
+    <string name="menu_general_server_port">Puerto</string>
+    
+    <string-array name="valores">
+        <item >valor</item>
+    </string-array>
 
 </resources>

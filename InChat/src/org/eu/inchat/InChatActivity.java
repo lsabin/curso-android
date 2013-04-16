@@ -6,23 +6,26 @@ import java.util.Date;
 import java.util.List;
 
 import org.eu.inchat.adapters.InChatAdapter;
+import org.eu.inchat.fragments.FragmentPreferencias;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.Data;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class InChatActivity extends ListActivity {
+public class InChatActivity extends ListActivity implements
+		ReadMessagesListener {
 
 	private List<Contacto> historico;
 
@@ -49,10 +52,11 @@ public class InChatActivity extends ListActivity {
 		setContentView(R.layout.activity_in_chat);
 
 		initButtons();
-		
-		//Contactos.creaContactos(getApplicationContext());
+
+		// Contactos.creaContactos(getApplicationContext());
 
 		historico = initHistory();
+
 		initListView(historico);
 
 	}
@@ -73,21 +77,23 @@ public class InChatActivity extends ListActivity {
 		 * }
 		 */
 
-		//contactos = creaContactosPrueba();
+		// contactos = creaContactosPrueba();
 		contactos = obtieneContactosReales();
 
 		for (Contacto contacto : contactos) {
 			contacto.setUltimaConexion(new Date());
 		}
-		
 
 		creaMensajesPrueba(contactos);
-		
+		obtieneMensajesRecibidos(contactos);
+
 		contactos = depuraContactos(contactos);
-		
-		
 
 		return contactos;
+	}
+
+	private void obtieneMensajesRecibidos(List<Contacto> contactos) {
+
 	}
 
 	private void initListView(List<Contacto> historico) {
@@ -122,7 +128,7 @@ public class InChatActivity extends ListActivity {
 	private void abreChatContacto(int position) {
 
 		Contacto chat = historico.get(position);
-		
+
 		Log.d(getClass().getName(), chat.getNumeroTelefono());
 
 		// Pasar el id del chat a la activity para que recupere los datos de la
@@ -134,8 +140,8 @@ public class InChatActivity extends ListActivity {
 	}
 
 	private List<Mensaje> creaMensajesPrueba(List<Contacto> contactos) {
-		
-		List<Mensaje> conversacion = new ArrayList<Mensaje>();		
+
+		List<Mensaje> conversacion = new ArrayList<Mensaje>();
 
 		// Crear mensajes para un par de contactos de prueba
 		Mensaje[] conversacion1 = new Mensaje[] {
@@ -152,18 +158,17 @@ public class InChatActivity extends ListActivity {
 				new Mensaje(
 						"Pues muy bien porque bla bla bla bla bla  bla bla",
 						new Date(new Date().getTime() + 1), true, "1"), };
-		
-		for(int i = 0; i < conversacion1.length; i++) {
+
+		for (int i = 0; i < conversacion1.length; i++) {
 			conversacion.add(conversacion1[i]);
 		}
-		
 
 		for (Contacto contacto : contactos) {
-			
+
 			String numeroTelefono = contacto.getNumeroTelefono();
-			numeroTelefono = numeroTelefono.replaceAll("-","");
-			numeroTelefono = numeroTelefono.replaceAll(" ","");
-			
+			numeroTelefono = numeroTelefono.replaceAll("-", "");
+			numeroTelefono = numeroTelefono.replaceAll(" ", "");
+
 			if ("986710903".equals(numeroTelefono)) {
 				contacto.setMensajes(conversacion);
 			} else if ("622098721".equals(numeroTelefono)) {
@@ -201,20 +206,42 @@ public class InChatActivity extends ListActivity {
 		return Contactos.obtieneContactosReales(getApplicationContext());
 
 	}
-	
+
 	private List<Contacto> depuraContactos(List<Contacto> contactos) {
-		
+
 		List<Contacto> contactosConMensaje = new ArrayList<Contacto>();
-		
-		for(Contacto contacto : contactos) {
-			if(!contacto.getMensajes().isEmpty()) {
+
+		for (Contacto contacto : contactos) {
+			if (!contacto.getMensajes().isEmpty()) {
 				contactosConMensaje.add(contacto);
 			}
-			
+
 		}
-		
+
 		return contactosConMensaje;
-		
-	}	
+
+	}
+
+	@Override
+	public void onMessagesReceived(List<Mensaje> result) {
+
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_settings:
+				//Lanzar activity de preferencias
+				Intent intent = new Intent(this,Preferencias.class);
+				startActivity(intent);
+
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+
+	}
 
 }

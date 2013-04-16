@@ -1,6 +1,9 @@
 package org.eu.inchat.tasks;
 
-import org.eu.inchat.MessagesListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eu.inchat.ReadMessagesListener;
 import org.eu.inchat.model.Mensaje;
 import org.eu.inchat.server.MessageSender;
 
@@ -10,23 +13,16 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
+public class ReadMessagesAsyncTask extends AsyncTask<Void, Void, List<Mensaje>> {
 
 	private static String host;
 	private static int puerto;
+
 	private static String ownerPhone;
 
-	public static MessagesListener mListener;
+	public static ReadMessagesListener mListener;
 	private static Context context;
-
-	public static ServerAsyncTask newInstance(MessagesListener listener,
-			Context theContext) {
-		mListener = listener;
-		context = theContext;
-		ServerAsyncTask l = new ServerAsyncTask();
-		obtieneConfiguracion();
-		return l;
-	}
+	
 	
 	private static void obtieneConfiguracion() {
 		
@@ -34,6 +30,16 @@ public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
 		host = prefs.getString("server_ip", "");
 		puerto = Integer.parseInt(prefs.getString("server_port", "1"));
 		ownerPhone = prefs.getString("user_id", "0");
+	}
+
+	public static ReadMessagesAsyncTask newInstance(ReadMessagesListener listener,
+			Context theContext) {
+		mListener = listener;
+		context = theContext;
+		ReadMessagesAsyncTask l = new ReadMessagesAsyncTask();
+		
+		obtieneConfiguracion();
+		return l;
 	}
 
 	public String getHost() {
@@ -61,36 +67,33 @@ public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
 	}
 
 	@Override
-	protected Integer doInBackground(Mensaje... params) {
+	protected List<Mensaje> doInBackground(Void... params) {
 		
-		int sentMessages = 0;
+		List<Mensaje> mensajesRecibidos = new ArrayList<Mensaje>();
 
 		MessageSender sender = new MessageSender(host, puerto);
 		
-		
-		for(int i = 0;i<params.length;i++) {
-			Mensaje mensaje = params[i];
+		try {
+			mensajesRecibidos = sender.readMessages(ownerPhone);
 			
-			try {
-				Log.d(getClass().getName(), "remite: " + ownerPhone);
-				sender.sendMessage(ownerPhone, mensaje.getUserId(), mensaje.getTextoMensaje());
-				sentMessages++;
+			Log.d(getClass().getName(),"Mensajes recibidos: " + mensajesRecibidos);
 
-			} catch (Exception e) {
-				Log.e(getClass().getName(), "Error: " + e.getMessage());
-			}
-			
+		} catch (Exception e) {
+			Log.e(getClass().getName(), "Error: " + e.getMessage());
 		}
+			
 
-
-		return sentMessages;
+		return mensajesRecibidos;
 
 	}
 	
 	
 	@Override
-	protected void onPostExecute(Integer result) {
-		mListener.onMessageSent(result);
+	protected void onPostExecute(List<Mensaje> resultado) {
+		
+		Log.d(getClass().getName(),"Mensajes recibidos: " + resultado);
+		
+		mListener.onMessagesReceived(resultado);
 	}	
 
 }

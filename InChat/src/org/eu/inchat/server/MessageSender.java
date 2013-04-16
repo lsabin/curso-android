@@ -19,11 +19,12 @@ public class MessageSender {
 	private String host;
 	private int puerto;
 	
-	private static final String MSG_FROM = "MSG_FROM: ";
-	private static final String RCTP_TO = "RCTP_TO: ";
+	private static final String MSG_FROM = "MSG FROM: ";
+	private static final String RCTP_TO = "RCTP TO: ";
 	private static final String TIME = "TIME: ";
 	private static final String DATA = "DATA: ";
 	private static final String GETMSGID = "GETMSGID: ";
+	private static final String CARACTER_SEPARADOR = ":";
 
 	public MessageSender(String host, int puerto) {
 		super();
@@ -33,23 +34,18 @@ public class MessageSender {
 
 
 
-	public void sendMessage(String message) throws Exception {
+	public void sendMessage(String remite, String receptor, String mensaje) throws Exception {
 		Socket socket = new Socket(host, puerto);
 
-		InputStream inputStream = new ByteArrayInputStream(
-				message.getBytes("UTF-8"));
+		
+		DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+		dos.writeUTF(creaRemitente(remite));
+		dos.writeUTF(creaReceptor(receptor));
+		dos.writeUTF(creaTimestamp());
+		dos.writeUTF(creaData(mensaje));
 
-		OutputStream socketOutputStream = socket.getOutputStream();
-
-		byte[] buffer = new byte[1024];
-		int read;
-		while ((read = inputStream.read(buffer)) != -1) {
-			socketOutputStream.write(buffer, 0, read);
-		}
-		socketOutputStream.close();
-		inputStream.close();
+		dos.close();
 		socket.close();
-
 	}
 	
 	
@@ -65,18 +61,35 @@ public class MessageSender {
 			
 			DataInputStream dis = new DataInputStream(socket.getInputStream());
 			
+			String remitente = "";
+			Date fechaTimestamp = new Date();
+			String textoMensaje = "";			
+			
 			do {
+				
 				String linea = dis.readUTF();
 				
 				Log.d(getClass().getName(), "Linea leida: " + linea);
 				
 				if (linea.startsWith(MSG_FROM)) {
-					
+					remitente = extraeDato(linea);
 				} else if (linea.startsWith(TIME)) {
+					String fecha = extraeDato(linea);
 					
+					if (!"".equals(fecha)) {
+						fechaTimestamp = new Date(Long.parseLong(fecha));
+					}
+					
+				} else if (linea.startsWith(DATA)) {
+					textoMensaje = extraeDato(linea);
 				}
 				
 			} while (dis.available() > 0);
+			
+			if(!"".equals(textoMensaje)) {
+				Mensaje nuevoMensaje = new Mensaje(textoMensaje, fechaTimestamp, false, remitente);
+				mensajes.add(nuevoMensaje);
+			}			
 			
 			
 		} catch (Exception e) {
@@ -84,6 +97,19 @@ public class MessageSender {
 		}
 		
 		return mensajes;
+		
+		
+	}
+	
+	private String extraeDato(String cadenaRecibida) {
+		String resultado = "";
+		
+		if (!"".equals(cadenaRecibida)) {
+			int indice = cadenaRecibida.indexOf(CARACTER_SEPARADOR);
+			resultado = cadenaRecibida.substring(indice+1).trim();	
+		}
+		
+		return resultado;
 		
 		
 	}
