@@ -23,6 +23,14 @@
             android:summary="@string/menu_general_server_port"
             android:dialogTitle="@string/menu_general_server_port"/>
         
+        <ListPreference 
+            android:key="opcion"
+            android:title="Opciones de prueba"
+            android:summary="Opciones de prueba"
+            android:dialogTitle="Opciones de prueba"
+            android:entries="@array/opciones" 
+            android:entryValues="@array/valores"/>
+        
     </PreferenceCategory>
     
 

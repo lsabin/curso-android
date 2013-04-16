@@ -15,7 +15,14 @@
     <string name="menu_general_server_port">Puerto</string>
     
     <string-array name="valores">
-        <item >valor</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
+    
+    <string-array name="opciones">
+        <item>opcion 1</item>
+        <item>opcion 2</item>
+    </string-array>
+    
 
 </resources>

@@ -9,6 +9,7 @@ package org.eu.inchat;
 
 public final class R {
     public static final class array {
+        public static final int opciones=0x7f080001;
         public static final int valores=0x7f080000;
     }
     public static final class attr {

@@ -19,6 +19,8 @@ public class Preferencias extends PreferenceActivity {
 		
 		addPreferencesFromResource(R.xml.preferencias);
 		
+		
+		
 	/*	Para usar fragmentos 
 		 getFragmentManager().beginTransaction()
 			.replace(android.R.id.content, new FragmentPreferencias())
