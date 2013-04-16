@@ -33,12 +33,23 @@
 
     <ListView
         android:id="@android:id/list"
+        style="@style/listas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relativeLayout2" >
+    </ListView>
+    
+    <TextView
+        android:id="@+id/textoProgreso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout2"
-        style="@style/listas" >
-
-    </ListView>
-
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_below="@android:id/list"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="#cccccc"
+        android:textColor="#000000" />
+    
 </RelativeLayout>

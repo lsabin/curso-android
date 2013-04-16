@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/izquierda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/chat_bubble_local_green"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/chat.fechaLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" 
+            style="@style/chats" />
+
+        <TextView
+            android:id="@+id/chat.textMensajeLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            style="@style/chats" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/derecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/izquierda"
+        android:background="@drawable/chat_bubble_remote_orange"
+        
+        android:gravity="right"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/chat.fechaRemoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000"
+            style="@style/chats" />
+
+        <TextView
+            android:id="@+id/chat.textMensajeRemoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            style="@style/chats" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -50,7 +50,7 @@ public class InChatActivity extends ListActivity {
 
 		initButtons();
 		
-		Contactos.creaContactos(getApplicationContext());
+		//Contactos.creaContactos(getApplicationContext());
 
 		historico = initHistory();
 		initListView(historico);
@@ -79,8 +79,13 @@ public class InChatActivity extends ListActivity {
 		for (Contacto contacto : contactos) {
 			contacto.setUltimaConexion(new Date());
 		}
+		
 
 		creaMensajesPrueba(contactos);
+		
+		contactos = depuraContactos(contactos);
+		
+		
 
 		return contactos;
 	}
@@ -117,6 +122,8 @@ public class InChatActivity extends ListActivity {
 	private void abreChatContacto(int position) {
 
 		Contacto chat = historico.get(position);
+		
+		Log.d(getClass().getName(), chat.getNumeroTelefono());
 
 		// Pasar el id del chat a la activity para que recupere los datos de la
 		// conversación
@@ -127,6 +134,8 @@ public class InChatActivity extends ListActivity {
 	}
 
 	private List<Mensaje> creaMensajesPrueba(List<Contacto> contactos) {
+		
+		List<Mensaje> conversacion = new ArrayList<Mensaje>();		
 
 		// Crear mensajes para un par de contactos de prueba
 		Mensaje[] conversacion1 = new Mensaje[] {
@@ -143,13 +152,23 @@ public class InChatActivity extends ListActivity {
 				new Mensaje(
 						"Pues muy bien porque bla bla bla bla bla  bla bla",
 						new Date(new Date().getTime() + 1), true, "1"), };
-
-		List<Mensaje> conversacion = Arrays.asList(conversacion1);
+		
+		for(int i = 0; i < conversacion1.length; i++) {
+			conversacion.add(conversacion1[i]);
+		}
+		
 
 		for (Contacto contacto : contactos) {
-			if ("1".equals(contacto.getNumeroTelefono())) {
+			
+			String numeroTelefono = contacto.getNumeroTelefono();
+			numeroTelefono = numeroTelefono.replaceAll("-","");
+			numeroTelefono = numeroTelefono.replaceAll(" ","");
+			
+			if ("986710903".equals(numeroTelefono)) {
 				contacto.setMensajes(conversacion);
-			} else if ("8".equals(contacto.getNumeroTelefono())) {
+			} else if ("622098721".equals(numeroTelefono)) {
+				contacto.setMensajes(conversacion);
+			} else if ("981344287".equals(numeroTelefono)) {
 				contacto.setMensajes(conversacion);
 			} else {
 				contacto.setMensajes(new ArrayList<Mensaje>());
@@ -182,5 +201,20 @@ public class InChatActivity extends ListActivity {
 		return Contactos.obtieneContactosReales(getApplicationContext());
 
 	}
+	
+	private List<Contacto> depuraContactos(List<Contacto> contactos) {
+		
+		List<Contacto> contactosConMensaje = new ArrayList<Contacto>();
+		
+		for(Contacto contacto : contactos) {
+			if(!contacto.getMensajes().isEmpty()) {
+				contactosConMensaje.add(contacto);
+			}
+			
+		}
+		
+		return contactosConMensaje;
+		
+	}	
 
 }

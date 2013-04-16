@@ -1,6 +1,7 @@
 package org.eu.inchat.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,10 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 	public InChatAdapter(Context context, int textViewResourceId,
 			List<Contacto> items) {
 		super(context, textViewResourceId, items);
-		this.items = items;
+
+		//Depura los contactos para que solo se muestren en el historial
+		//los que tienen mensajes	
+		this.items = depuraContactos(items);
 		
 		this.context = context;
 		
@@ -104,6 +108,22 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 		return convertView;
 		
 	}
+	
+	
+	private List<Contacto> depuraContactos(List<Contacto> contactos) {
+		
+		List<Contacto> contactosConMensaje = new ArrayList<Contacto>();
+		
+		for(Contacto contacto : contactos) {
+			if(!contacto.getMensajes().isEmpty()) {
+				contactosConMensaje.add(contacto);
+			}
+			
+		}
+		
+		return contactosConMensaje;
+		
+	}	
 	
 	
 	
