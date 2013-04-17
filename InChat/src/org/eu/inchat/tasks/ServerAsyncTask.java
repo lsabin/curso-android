@@ -1,6 +1,7 @@
 package org.eu.inchat.tasks;
 
 import org.eu.inchat.MessagesListener;
+import org.eu.inchat.db.ContactsDAO;
 import org.eu.inchat.model.Mensaje;
 import org.eu.inchat.server.MessageSender;
 
@@ -18,6 +19,8 @@ public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
 
 	public static MessagesListener mListener;
 	private static Context context;
+	
+	private ContactsDAO dao;
 
 	public static ServerAsyncTask newInstance(MessagesListener listener,
 			Context theContext) {
@@ -73,6 +76,7 @@ public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
 			
 			try {
 				Log.d(getClass().getName(), "remite: " + ownerPhone);
+				insertaMensaje(mensaje);
 				sender.sendMessage(ownerPhone, mensaje.getUserId(), mensaje.getTextoMensaje());
 				sentMessages++;
 
@@ -92,5 +96,15 @@ public class ServerAsyncTask extends AsyncTask<Mensaje, Void, Integer> {
 	protected void onPostExecute(Integer result) {
 		mListener.onMessageSent(result);
 	}	
+	
+	
+	private void insertaMensaje(Mensaje mensaje) {
+		ContactsDAO dao = new ContactsDAO(context);
+		
+		dao.open();
+		dao.creaMensaje(mensaje, true);
+		dao.close();
+		
+	}
 
 }

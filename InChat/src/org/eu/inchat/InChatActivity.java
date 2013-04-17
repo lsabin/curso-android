@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.eu.inchat.adapters.InChatAdapter;
+import org.eu.inchat.db.ContactsDAO;
 import org.eu.inchat.fragments.FragmentPreferencias;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
@@ -78,14 +79,16 @@ public class InChatActivity extends ListActivity implements
 		 */
 
 		// contactos = creaContactosPrueba();
-		contactos = obtieneContactosReales();
+		//contactos = obtieneContactosReales();
+		contactos = obtieneContactosDb();
+		asociaMensajesContacto(contactos);
 
 		for (Contacto contacto : contactos) {
 			contacto.setUltimaConexion(new Date());
 		}
 
-		creaMensajesPrueba(contactos);
-		obtieneMensajesRecibidos(contactos);
+		//creaMensajesPrueba(contactos);
+		//obtieneMensajesRecibidos(contactos);
 
 		contactos = depuraContactos(contactos);
 
@@ -205,6 +208,40 @@ public class InChatActivity extends ListActivity implements
 
 		return Contactos.obtieneContactosReales(getApplicationContext());
 
+	}
+	
+	
+	private List<Contacto> obtieneContactosDb() {
+		List<Contacto> contactos = new ArrayList<Contacto>();
+		
+		ContactsDAO dao = new ContactsDAO(this);
+		
+		dao.open();
+		contactos = dao.findAllContacts();
+		dao.close();	
+		
+		
+		return contactos;
+		
+	}
+	
+	private void asociaMensajesContacto(List<Contacto> contactos) {
+		for (Contacto contacto : contactos) {
+			obtieneMensajesContactoDb(contacto);
+		}
+		
+	}
+	
+	
+	private void obtieneMensajesContactoDb(Contacto contacto) {
+		List<Mensaje> mensajes = new ArrayList<Mensaje>(); 
+		
+		ContactsDAO dao = new ContactsDAO(this);
+		
+		dao.open();
+		mensajes = dao.findMensajesByPhone(contacto.getNumeroTelefono());
+		contacto.setMensajes(mensajes);
+		dao.close();
 	}
 
 	private List<Contacto> depuraContactos(List<Contacto> contactos) {

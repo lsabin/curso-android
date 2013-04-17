@@ -9,6 +9,7 @@ public class Mensaje implements Serializable {
 	private Date timestampMensaje;
 	private boolean local;
 	private String userId;
+	private Contacto contactoDestino;
 	
 	public Mensaje(String textoMensaje, Date timestampMensaje, boolean local,
 			String userId) {
@@ -17,6 +18,8 @@ public class Mensaje implements Serializable {
 		this.timestampMensaje = timestampMensaje;
 		this.local = local;
 		this.userId = userId;
+	}
+	public Mensaje() {
 	}
 	public String getTextoMensaje() {
 		return textoMensaje;
@@ -42,6 +45,14 @@ public class Mensaje implements Serializable {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public Contacto getContactoDestino() {
+		return contactoDestino;
+	}
+	public void setContactoDestino(Contacto contactoDestino) {
+		this.contactoDestino = contactoDestino;
+	}
+	
+	
 	
 
 }

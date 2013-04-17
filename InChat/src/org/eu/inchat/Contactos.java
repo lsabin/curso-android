@@ -46,6 +46,10 @@ public class Contactos {
 			String phoneType = c.getString(col4Index);
 			long _id = c.getLong(idColIndex);
 			Contacto contactItem = new Contacto();
+			
+			//Limpia los numeros de telefono de caracteres
+			phoneNumber = phoneNumber.replaceAll("-", "");
+			phoneNumber = phoneNumber.replaceAll(" ", "");
 			contactItem.setNumeroTelefono(phoneNumber);
 			// contactItem.mContactId = contactId;
 			contactItem.setNombre(displayName);

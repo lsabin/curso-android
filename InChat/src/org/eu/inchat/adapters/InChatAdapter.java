@@ -88,8 +88,6 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 		
 		String textoUltimoMensaje = null;
 		if (!mensajes.isEmpty()) {
-			
-			
 			Mensaje ultimoMensaje = mensajes.get(mensajes.size()-1);
 			textoUltimoMensaje = ultimoMensaje.getTextoMensaje();
 		} else {

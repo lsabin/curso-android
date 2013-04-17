@@ -89,12 +89,11 @@ public class ChatActivity extends ListActivity implements MessagesListener, Read
 	
 	private void enviaMensaje(String textoMensaje) {
 		
-		
-		
 		ServerAsyncTask task = ServerAsyncTask.newInstance(this, getApplicationContext());
 		
 		task.setOwnerPhone(ownerPhone);
 		Mensaje mensaje = new Mensaje(textoMensaje, new Date(), true, contacto.getNumeroTelefono());
+		mensaje.setContactoDestino(contacto);
 		task.execute(mensaje);
 		
 		ChatAdapter adapter = (ChatAdapter) getListAdapter();
