@@ -10,6 +10,8 @@ import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +103,14 @@ public class InChatAdapter extends ArrayAdapter<Contacto> {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		holder.lastDate.setText(sdf.format(ultimaConexion));
 		
-		holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+		if (contacto.getIcono() != null && contacto.getIcono().length > 0) {
+			Bitmap bm = BitmapFactory.decodeByteArray(contacto.getIcono(), 0, contacto.getIcono().length);
+			holder.contactIcon.setImageBitmap(bm);
+		} else {
+			holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));	
+		}
+		
+		
 		
 		return convertView;
 		

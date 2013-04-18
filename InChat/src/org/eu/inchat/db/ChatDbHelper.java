@@ -12,6 +12,7 @@ public class ChatDbHelper extends SQLiteOpenHelper {
 	  public static final String COLUMN_TELEFONO = "telefono";
 	  public static final String COLUMN_NOMBRE = "nombre";
 	  public static final String COLUMN_ESTADO = "estado";
+	  public static final String COLUMN_ICONO = "icono";
 	  
 	  public static final String TABLE_MENSAJES = "MENSAJES";
 	  public static final String COLUMN_TEXTO_MENSAJES = "texto";
@@ -21,7 +22,7 @@ public class ChatDbHelper extends SQLiteOpenHelper {
 	  	    
 
 	  private static final String DATABASE_NAME = "chat.db";
-	  private static final int DATABASE_VERSION = 1;
+	  private static final int DATABASE_VERSION = 2;
 
 	  
 	  private static final String TABLE_CONTACTS_CREATE = "create table "
@@ -29,7 +30,8 @@ public class ChatDbHelper extends SQLiteOpenHelper {
 		      + " integer primary key autoincrement, " 
 		      + COLUMN_TELEFONO + " text not null, " 
 		      + COLUMN_NOMBRE + " text not null, " 
-		      + COLUMN_ESTADO + " text "
+		      + COLUMN_ESTADO + " text, "
+		      + COLUMN_ICONO + " blob "
 		      		+ ");";
 	  
 	  private static final String TABLE_MENSAJES_CREATE = "create table "

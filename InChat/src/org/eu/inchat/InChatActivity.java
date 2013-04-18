@@ -10,6 +10,7 @@ import org.eu.inchat.db.ContactsDAO;
 import org.eu.inchat.fragments.FragmentPreferencias;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
+import org.eu.inchat.services.InChatService;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -57,7 +58,28 @@ public class InChatActivity extends ListActivity implements
 		// Contactos.creaContactos(getApplicationContext());
 
 		historico = initHistory();
+		initListView(historico);
+		
+		
+		//Arranque del servicio de notificaciones de mensajes
+		doStartService();
 
+	}
+	
+	
+
+	private void doStartService() {
+		startService(new Intent(this, InChatService.class));
+
+		//Habria que comprobar si el servicio está arrancado
+		
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		historico = initHistory();
 		initListView(historico);
 
 	}

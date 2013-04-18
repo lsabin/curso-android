@@ -1,5 +1,6 @@
 package org.eu.inchat.db;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,7 +106,8 @@ public class ContactsDAO {
 		Cursor cursor = database.query(ChatDbHelper.TABLE_CONTACTS,
 				new String[] { ChatDbHelper.COLUMN_NOMBRE, // 0
 						ChatDbHelper.COLUMN_TELEFONO, // 1
-						ChatDbHelper.COLUMN_ESTADO // 2
+						ChatDbHelper.COLUMN_ESTADO, // 2
+						ChatDbHelper.COLUMN_ICONO, // 3
 				}, 
 				null,
 				null, null, null, null);
@@ -153,9 +155,15 @@ public class ContactsDAO {
 		ContentValues values = new ContentValues();
 		values.put(ChatDbHelper.COLUMN_NOMBRE, contacto.getNombre());
 		values.put(ChatDbHelper.COLUMN_TELEFONO, contacto.getNumeroTelefono());
+		values.put(ChatDbHelper.COLUMN_ICONO, contacto.getIcono());
 		
 		long contactId = database.insert(ChatDbHelper.TABLE_CONTACTS,null, values);
 		
+	}
+	
+	
+	public void borraMensaje(Mensaje mensaje) {
+		database.delete(ChatDbHelper.TABLE_MENSAJES, ChatDbHelper.COLUMN_NOMBRE, new String[]{""});
 	}
 	
 	private String convierteFecha(Date fecha) {
@@ -169,7 +177,16 @@ public class ContactsDAO {
 		mensaje.setTextoMensaje(cursor.getString(0));
 		mensaje.setLocal(cursor.getInt(2) != 0);
 		mensaje.setUserId(cursor.getString(3));
-		mensaje.setTimestampMensaje(new Date()); // TODO
+		
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		Date fechaFormato = new Date();
+		try {
+			fechaFormato = sdf.parse(cursor.getString(1));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		mensaje.setTimestampMensaje(fechaFormato); // TODO
 
 		return mensaje;
 	}
@@ -180,6 +197,7 @@ public class ContactsDAO {
 		contacto.setNombre(cursor.getString(0));
 		contacto.setNumeroTelefono(cursor.getString(1));
 		contacto.setMensajeEstado(cursor.getString(2));
+		contacto.setIcono(cursor.getBlob(3));
 
 
 		return contacto;

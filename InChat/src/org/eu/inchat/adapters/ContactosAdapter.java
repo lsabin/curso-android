@@ -1,7 +1,5 @@
 package org.eu.inchat.adapters;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.eu.inchat.R;
@@ -9,6 +7,8 @@ import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +67,7 @@ public class ContactosAdapter extends ArrayAdapter<Contacto> {
 			
 			holder.contactName = (TextView) convertView.findViewById(R.id.contact_textContactName);
 			holder.mensajeEstado = (TextView) convertView.findViewById(R.id.contact_textMensajeEstado);
-			holder.contactIcon = (ImageView) convertView.findViewById(R.id.imageIconContact);
+			holder.contactIcon = (ImageView) convertView.findViewById(R.id.contact_icono);
 			
 			convertView.setTag(holder);
 			
@@ -81,7 +81,14 @@ public class ContactosAdapter extends ArrayAdapter<Contacto> {
 		
 		holder.contactName.setText(contacto.getNombre());
 		holder.mensajeEstado.setText(contacto.getMensajeEstado());
-		holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+		
+		if(contacto.getIcono() != null && contacto.getIcono().length > 0) {
+			Bitmap bm = BitmapFactory.decodeByteArray(contacto.getIcono(), 0, contacto.getIcono().length);
+			holder.contactIcon.setImageBitmap(bm);
+		} else {
+			holder.contactIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));	
+		}
+		
 		
 		
 		return convertView;

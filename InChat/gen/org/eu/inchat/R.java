@@ -33,16 +33,18 @@ public final class R {
         public static final int ic_launcher=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b001a;
+        public static final int action_borrar=0x7f0b001b;
+        public static final int action_settings=0x7f0b001c;
         public static final int chat_fechaLocal=0x7f0b0010;
         public static final int chat_fechaRemoto=0x7f0b0013;
         public static final int chat_textMensajeLocal=0x7f0b0011;
         public static final int chat_textMensajeRemoto=0x7f0b0014;
         public static final int chat_textoMensaje=0x7f0b000e;
-        public static final int contact_textContactName=0x7f0b0015;
-        public static final int contact_textMensajeEstado=0x7f0b0016;
+        public static final int contact_icono=0x7f0b0015;
+        public static final int contact_textContactName=0x7f0b0016;
+        public static final int contact_textMensajeEstado=0x7f0b0017;
         public static final int derecha=0x7f0b0012;
-        public static final int iconoContactos=0x7f0b0017;
+        public static final int iconoContactos=0x7f0b0018;
         public static final int imageAddChat=0x7f0b0004;
         public static final int imageAttach=0x7f0b000c;
         public static final int imageIconContact=0x7f0b0005;
@@ -56,10 +58,10 @@ public final class R {
         public static final int textContactName=0x7f0b0006;
         public static final int textLastChatDate=0x7f0b0008;
         public static final int textLastChatLine=0x7f0b0007;
-        public static final int textoContactos=0x7f0b0018;
+        public static final int textoContactos=0x7f0b0019;
         public static final int textoHistorial=0x7f0b0002;
         public static final int textoNombreContacto=0x7f0b000b;
-        public static final int textoProgreso=0x7f0b0019;
+        public static final int textoProgreso=0x7f0b001a;
     }
     public static final class layout {
         public static final int activity_in_chat=0x7f030000;
@@ -70,7 +72,8 @@ public final class R {
         public static final int contacts=0x7f030005;
     }
     public static final class menu {
-        public static final int in_chat=0x7f0a0000;
+        public static final int context_chat_menu=0x7f0a0000;
+        public static final int in_chat=0x7f0a0001;
     }
     public static final class raw {
         public static final int confirm=0x7f050000;

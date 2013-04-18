@@ -4,9 +4,9 @@
     android:layout_height="match_parent" >
 
     <ImageView
-        android:id="@+id/imageIconContact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/contact.icono"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher" />
@@ -15,9 +15,9 @@
         android:id="@+id/contact.textContactName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageIconContact"
+        android:layout_alignTop="@id/contact.icono"
         android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/imageIconContact"
+        android:layout_toRightOf="@id/contact.icono"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#222222" />
@@ -26,7 +26,7 @@
         android:id="@+id/contact.textMensajeEstado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageIconContact"
+        android:layout_alignBottom="@id/contact.icono"
         android:layout_alignLeft="@+id/contact.textContactName"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"

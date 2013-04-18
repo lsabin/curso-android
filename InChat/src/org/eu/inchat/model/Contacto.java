@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class Contacto implements Serializable {
@@ -14,6 +15,7 @@ public class Contacto implements Serializable {
 	private Uri iconoContacto;
 	private String mensajeEstado;
 	private List<Mensaje> mensajes;
+	private byte[] icono;
 	
 	public Contacto() {
 		
@@ -78,5 +80,16 @@ public class Contacto implements Serializable {
 	public void setMensajeEstado(String mensajeEstado) {
 		this.mensajeEstado = mensajeEstado;
 	}
+
+	public byte[] getIcono() {
+		return icono;
+	}
+
+	public void setIcono(byte[] icono) {
+		this.icono = icono;
+	}
+
+	
+	
 	
 }

@@ -1,5 +1,7 @@
 package org.eu.inchat;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -8,12 +10,17 @@ import java.util.List;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
+import android.util.Log;
 
 public class Contactos {
 	
@@ -21,10 +28,18 @@ public class Contactos {
 
 		List<Contacto> contactItemList = new ArrayList<Contacto>();
 		
+		
+		String[] projection = new String[] {Data._ID, //0
+				Data.DISPLAY_NAME, //1
+				Phone.NUMBER, 		//2
+				Data.CONTACT_ID, 	//3
+				Phone.TYPE, 		//4
+				Phone.LABEL,		//5
+				Data.PHOTO_THUMBNAIL_URI}; //6
+		
 		Cursor c = context.getContentResolver().query(
 				Data.CONTENT_URI,
-				new String[] { Data._ID, Data.DISPLAY_NAME, Phone.NUMBER,
-						Data.CONTACT_ID, Phone.TYPE, Phone.LABEL },
+				projection,
 				Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'", null,
 				Data.DISPLAY_NAME);
 		int count = c.getCount();
@@ -33,11 +48,11 @@ public class Contactos {
 		int displayNameColIndex = c.getColumnIndex("display_name");
 		int idColIndex = c.getColumnIndex("_id");
 		
-		// int contactIdColIndex =
-		c.getColumnIndex("contact_id");
+		int contactIdColIndex =c.getColumnIndex("contact_id");
 		int col2Index = c.getColumnIndex(columnNames[2]);
 		int col3Index = c.getColumnIndex(columnNames[3]);
 		int col4Index = c.getColumnIndex(columnNames[4]);
+		int colPhotoIndex = c.getColumnIndex(columnNames[6]);
 		
 		for (int i = 0; i < count; i++) {
 			String displayName = c.getString(displayNameColIndex);
@@ -45,13 +60,27 @@ public class Contactos {
 			int contactId = c.getInt(col3Index);
 			String phoneType = c.getString(col4Index);
 			long _id = c.getLong(idColIndex);
+			
+			//String uriPhoto = c.getString(colPhotoIndex);
+			//Log.i("LeeContactos", "Photo uri: " + uriPhoto);
+			
+			
+			// contactItem.mContactId = contactId;
+			
+			byte[] fotoBytes = getPhoto(context, contactId);
+			
+			
 			Contacto contactItem = new Contacto();
+			
+			
+			contactItem.setIcono(fotoBytes);
 			
 			//Limpia los numeros de telefono de caracteres
 			phoneNumber = phoneNumber.replaceAll("-", "");
 			phoneNumber = phoneNumber.replaceAll(" ", "");
+			
 			contactItem.setNumeroTelefono(phoneNumber);
-			// contactItem.mContactId = contactId;
+			
 			contactItem.setNombre(displayName);
 			contactItemList.add(contactItem);
 			boolean b2 = c.moveToNext();
@@ -60,7 +89,35 @@ public class Contactos {
 		
 		return contactItemList;
 
-	}	
+	}
+	
+	
+	public static byte[] getPhoto(Context context, int contactId) {
+	    Uri contactPhotoUri = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId);
+	    
+
+	    // contactPhotoUri --> content://com.android.contacts/contacts/1557
+	    
+
+	    InputStream photoDataStream = Contacts.openContactPhotoInputStream(context.getContentResolver(),contactPhotoUri); // <-- always null
+	    Bitmap photo = BitmapFactory.decodeStream(photoDataStream);
+	    
+	    Log.i("Contactos", "Uri photo: " + contactPhotoUri.toString() + ", bitmap: " + photo);
+	    
+	    if (photo != null) {
+	    	
+	    	ByteArrayOutputStream bout = new ByteArrayOutputStream(photo.getByteCount());
+	    	photo.compress(Bitmap.CompressFormat.JPEG, 100, bout);
+	    	
+	    	return bout.toByteArray();
+	    	
+	    } else {
+	    	return new byte[0];
+	    }
+	    
+	}
+	
+ 
 	
 	public static void creaContactos(Context context) {
 		
