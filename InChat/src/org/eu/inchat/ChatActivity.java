@@ -10,7 +10,7 @@ import org.eu.inchat.adapters.ChatAdapter;
 import org.eu.inchat.db.ContactsDAO;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
-import org.eu.inchat.services.InChatService;
+import org.eu.inchat.services.InChatService2;
 import org.eu.inchat.tasks.ReadMessagesAsyncTask;
 import org.eu.inchat.tasks.ServerAsyncTask;
 
@@ -46,8 +46,6 @@ public class ChatActivity extends ListActivity implements MessagesListener,
 	private List<Mensaje> mensajes = new ArrayList<Mensaje>();
 	private Timer timer;
 	private String ownerPhone = "9003";
-	
-	
 	private Messenger service;
 
 	private OnClickListener listenerEnvioMensaje = new OnClickListener() {
@@ -135,7 +133,7 @@ public class ChatActivity extends ListActivity implements MessagesListener,
 		//Ahora el envio lo hace el servicio
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("message", mensaje);
-		Message msg = Message.obtain(null, InChatService.MSG_SET_MESSAGE);
+		Message msg = Message.obtain(null, InChatService2.MSG_SET_MSG_VALUE);
 		msg.setData(bundle);
 		
 		try {
@@ -292,14 +290,14 @@ public class ChatActivity extends ListActivity implements MessagesListener,
 	 */
 	
 	private void doBindService() {
-		Intent intent = new Intent(this, InChatService.class);
+		Intent intent = new Intent(this, InChatService2.class);
 		bindService(intent, connection, BIND_AUTO_CREATE);
 	}
 	
 	private void doUnbindService() {
 		
 		if (service != null) {
-			Message msg = Message.obtain(null, InChatService.MSG_UNREGISTER_CLIENT);
+			Message msg = Message.obtain(null, InChatService2.MSG_UNREGISTER_CLIENT);
 			msg.replyTo = messenger;
 			
 			try {
@@ -316,11 +314,16 @@ public class ChatActivity extends ListActivity implements MessagesListener,
 		public void handleMessage(Message msg) {
 
 			switch (msg.what) {
-			case InChatService.MSG_SET_MESSAGE:
+			case InChatService2.MSG_SET_MSG_VALUE:
 				Mensaje mensaje = (Mensaje) msg.getData().getSerializable("mensaje");
 				Log.d(getClass().getName(), "Enviando mensaje .... ");
 				
-				//TODO: Mostrar en la pantall
+				//Mostrar en la pantalla el mensaje
+				if(mensaje.getUserId().equals(contacto.getNumeroTelefono())) {
+					contacto.getMensajes().add(mensaje);
+					getListView().invalidateViews();
+				}
+				
 				
 				break;
 
@@ -350,7 +353,7 @@ public class ChatActivity extends ListActivity implements MessagesListener,
 			Log.d(getClass().getName(), "conectado al servicio de mensajeria");
 			
 			
-			Message msg = Message.obtain(null, InChatService.MSG_REGISTER_CLIENT);
+			Message msg = Message.obtain(null, InChatService2.MSG_REGISTER_CLIENT);
 			msg.replyTo = messenger;
 			
 			try {

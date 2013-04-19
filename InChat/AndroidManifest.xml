@@ -31,6 +31,12 @@
         <activity android:name="ChatActivity"></activity>
         <activity android:name="Preferencias"></activity>
         <service android:name=".services.InChatService"></service>
+        <service android:name=".services.InChatService2"></service>
+        <receiver android:name=".broadcast.ScheduleReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

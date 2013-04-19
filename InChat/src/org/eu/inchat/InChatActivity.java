@@ -11,6 +11,7 @@ import org.eu.inchat.fragments.FragmentPreferencias;
 import org.eu.inchat.model.Contacto;
 import org.eu.inchat.model.Mensaje;
 import org.eu.inchat.services.InChatService;
+import org.eu.inchat.services.InChatService2;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -69,7 +70,10 @@ public class InChatActivity extends ListActivity implements
 	
 
 	private void doStartService() {
-		startService(new Intent(this, InChatService.class));
+		
+		if(!InChatService2.isRunning()) {
+			startService(new Intent(this, InChatService2.class));
+		}
 
 		//Habria que comprobar si el servicio está arrancado
 		

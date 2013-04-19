@@ -30,6 +30,8 @@
         <activity android:name="ContactosActivity"></activity>
         <activity android:name="ChatActivity"></activity>
         <activity android:name="Preferencias"></activity>
+        <service android:name=".services.InChatService"></service>
+        <service android:name=".services.InChatService2"></service>
     </application>
 
 </manifest>
